@@ -1,12 +1,17 @@
 const { login } = require('./login')
-const { open } = require('./../helpers')
+const { openLink } = require('./../helpers.js')
 
 const startFacebook = async () => {
-  const currentPage = await open('https://www.facebook.com/')
+  try {
+    const currentPage = await openLink('https://www.facebook.com/')
 
-  await login(currentPage)
+    await login(currentPage)
 
-  await currentPage.waitForNavigation()
+    await currentPage.waitForNavigation()
+
+  } catch(e) {
+    console.error('Error startFacebook', e)
+  }
 }
 
 module.exports = {

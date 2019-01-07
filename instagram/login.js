@@ -1,4 +1,4 @@
-const { delay } = require('../helpers')
+const { checkUsernameAndPassword } = require('../helpers')
 
 const { INSTAGRAM_USERNAME : u, INSTAGRAM_PASSWORD : p } = process.env
 const loginSelector = '#react-root > section > main > article > div.rgFsT > div:nth-child(2) > p > a'
@@ -8,11 +8,16 @@ const pXPath = '//*[@id="react-root"]/section/main/div/article/div/div[1]/div/fo
 
 const login = async (page) => {
   try {
-    await delay()
+
+    await checkUsernameAndPassword({
+      p,
+      u,
+      socialApp: 'Instagram',
+    });
+
     const loginLink = await page.waitFor(loginSelector)
     await loginLink.click()
 
-    await delay()
     const uInput = await page.waitForXPath(uXPath)
     await uInput.click()
     await page.keyboard.type(u)
@@ -21,7 +26,6 @@ const login = async (page) => {
     await pInput.click()
     await page.keyboard.type(p)
 
-    await delay()
     const submitBtn = await page.waitForXPath(submitXPath)
     await submitBtn.click()
   } catch(e) {

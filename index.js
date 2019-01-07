@@ -1,10 +1,14 @@
+const { openBrowser } = require('./helpers.js')
 const { startFacebook } = require('./facebook/facebook.js')
 const { startInstagram } = require('./instagram/instagram.js')
 
-startInstagram()
-  .then(() => console.log('done instagram'))
-  .catch(e => console.warn('error: ', e))
+async function start () {
+  await openBrowser();
 
-startFacebook()
-  .then(() => console.log('done facebook'))
-  .catch(e => console.warn('error: ', e))
+  //await startInstagram()
+  await startFacebook()
+}
+
+start()
+  .then(console.log)
+  .catch(console.err)

@@ -1,15 +1,19 @@
 const { login } = require('./login')
-const { open } = require('./../helpers')
+const { openLink } = require('./../helpers.js')
 const { closeTurnOnNotification} = require('./close-notification')
 
 const startInstagram = async () => {
-  const currentPage = await open('https://www.instagram.com/')
+  try {
+    const currentPage = await openLink('https://www.instagram.com/')
 
-  await login(currentPage)
+    await login(currentPage)
 
-  await currentPage.waitForNavigation()
+    await currentPage.waitForNavigation()
 
-  await closeTurnOnNotification(currentPage)
+    await closeTurnOnNotification(currentPage)
+  } catch (e) {
+    console.error('Error startInstagram', e);
+  }
 }
 
 module.exports = {

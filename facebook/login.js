@@ -1,4 +1,4 @@
-const { delay } = require('../helpers')
+const { checkUsernameAndPassword } = require('../helpers')
 
 const { FACEBOOK_USERNAME : u, FACEBOOK_PASSWORD : p } = process.env
 const uXPath = '//*[@id="email"]'
@@ -6,7 +6,11 @@ const pXPath = '//*[@id="pass"]'
 
 const login = async (page) => {
   try {
-    await delay()
+    await checkUsernameAndPassword({
+      p,
+      u,
+      socialApp: 'Facebook',
+    });
 
     const uInput = await page.waitForXPath(uXPath)
     await uInput.click()
@@ -25,6 +29,8 @@ const login = async (page) => {
     console.error('Error: login', e)
   }
 }
+
+
 
 module.exports = {
   login
